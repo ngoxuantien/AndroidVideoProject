@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/signinup"
+    tools:context=".Activity.SignInSignUpActivity">
+
+    <TextView
+        android:id="@+id/hello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="50dp"
+        android:text="Hello"
+        android:textColor="#ffff"
+        android:textSize="70dp" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hello"
+        android:layout_marginLeft="40dp"
+        android:text="Welcome to my video app, where there's a real experience"
+        android:textColor="#ffff" />
+
+    <LinearLayout
+        android:layout_marginLeft="80dp"
+     android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="140dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/signIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/backgrow_button_login"
+            android:text="Sign In"
+            android:textColor="#ffff" />
+
+        <Button
+            android:id="@+id/signUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/backgrow_button_signup"
+            android:text="Sign Up"
+            android:textColor="#050505" />
+
+
+    </LinearLayout>
+</RelativeLayout>

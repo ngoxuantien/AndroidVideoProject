@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeitem"
+        android:icon="@drawable/homeicon1"
+        android:title="Trang Chủ" />
+
+    <item
+        android:id="@+id/moviepageitem"
+        android:icon="@drawable/movieicon"
+        android:title="Movie" />
+
+    <item
+        android:id="@+id/tvshowitem"
+        android:icon="@drawable/tvicon"
+        android:title="TvShow" />
+    <item
+        android:id="@+id/historyitem"
+        android:icon="@drawable/history"
+        android:title="Đã xem" />
+    <item
+        android:id="@+id/moreitem"
+        android:icon="@drawable/more"
+        android:title="Thêm" />
+</menu>

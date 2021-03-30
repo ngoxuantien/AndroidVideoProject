@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#101010"
+    android:orientation="vertical"
+    tools:context=".Activity.ActivityInformationCast">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#101010"
+            android:orientation="vertical">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#101010"
+                    app:cardCornerRadius="10dp">
+
+                    <ImageView
+                        android:id="@+id/nyminh"
+                        android:layout_width="170dp"
+                        android:layout_height="230dp"
+                        android:scaleType="centerCrop"
+
+                        />
+                </androidx.cardview.widget.CardView>
+
+
+                // thông tin diễn viên
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="70dp"
+
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:text="Name"
+                            android:textColor="#ffff"
+                            android:textSize="13dp" />
+
+                        <TextView
+                            android:id="@+id/namecast"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:text="ooooo"
+                            android:textColor="#ffff"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp">
+
+                        <TextView
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:text="Date of Birth"
+                            android:textColor="#ffff"
+                            android:textSize="13dp" />
+
+                        <TextView
+                            android:id="@+id/date_of_birthcast"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+
+                            android:text="15/01/2001"
+                            android:textColor="#ffff"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_marginTop="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+
+                            android:text="Place Date"
+                            android:textColor="#ffff"
+                            android:textSize="13dp" />
+
+                        <TextView
+                            android:id="@+id/place_cast"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bắc Ninh"
+                            android:textColor="#ffff"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+
+                            android:text="Gender"
+                            android:textColor="#ffff"
+                            android:textSize="13dp" />
+
+                        <TextView
+                            android:id="@+id/sexcast"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+
+                            android:text="ooo"
+                            android:textColor="#ffff"
+                            android:textSize="13dp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical">
+                // tiểu sử
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="Tiểu sử"
+                    android:textColor="#ffff"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/storycast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="jdsfjaslfjlasjlfjaslfjlajfljaslfjljljljdsafljasdfasfkasdfhakhsdfkhasfkhaskdfhkashdfkhakfhkahfkahfkhaskdfhslfj"
+                    android:textColor="#ffff" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="Các phim đã tham gia"
+                    android:textColor="#ffff"
+                    android:textSize="20dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/infomationCast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

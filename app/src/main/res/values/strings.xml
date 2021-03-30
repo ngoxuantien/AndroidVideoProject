@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">appvideo</string>
+    <string-array name="country">
+        <item>Viet Nam</item>
+        <item>Japan</item>
+        <item>Malaysia</item>
+        <item>Korea</item>
+        <item>Lao</item>
+    </string-array>
+    <string name="facebook_app_id">190632335914834</string>
+    <string name="fb_login_protocol_scheme">fb190632335914834</string>
+
+</resources>
