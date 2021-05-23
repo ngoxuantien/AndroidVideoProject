@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">appvideo</string>
+    <string-array name="gioitinh">
+        <item>Nam</item>
+        <item>Nữ</item>
+    </string-array>
     <string-array name="country">
         <item>Viet Nam</item>
         <item>Japan</item>

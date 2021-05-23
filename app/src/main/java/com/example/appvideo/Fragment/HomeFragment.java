@@ -20,6 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +37,7 @@ import com.example.appvideo.R;
 import com.example.appvideo.adapter.BannerMoviesPagerAdapter;
 import com.example.appvideo.adapter.MainRecyclerAdapter;
 import com.example.appvideo.adapter.MovieListHorizontalAdapter;
+import com.example.appvideo.adapter.ViewPage2Adapter;
 import com.example.appvideo.model.AllCategory;
 import com.example.appvideo.model.CategoryItem;
 import com.example.appvideo.model.CategoryItem;
@@ -48,9 +52,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
-    BannerMoviesPagerAdapter bannerMoviesPagerAdapter;
-    TabLayout tabIndicator, categoryTab;
-    ViewPager bannerMoviesViewPager;
+    //  BannerMoviesPagerAdapter bannerMoviesPagerAdapter;
+    private ViewPage2Adapter viewPage2Adapter;
+    private TabLayout tabIndicator, categoryTab;
+    private ViewPager2 bannerMoviesViewPager;
+    private Timer timer;
     private Handler handler;
 
 
@@ -65,7 +71,7 @@ public class HomeFragment extends Fragment {
     Button purcharBtn;
     SwipeRefreshLayout swipeRefreshLayout;
     Json json = new Json();
-    TextView textView;
+    TextView textView, tv1, tv2, tv3, tv4;
     String t;
 
     View view;
@@ -88,7 +94,10 @@ public class HomeFragment extends Fragment {
 
 
         //////
-
+        tv1 = view.findViewById(R.id.tv1);
+        tv2 = view.findViewById(R.id.tv2);
+        tv3 = view.findViewById(R.id.tv3);
+        tv4 = view.findViewById(R.id.tv4);
         this.ClickSearch();
 
         this.setrefresh();
@@ -96,34 +105,42 @@ public class HomeFragment extends Fragment {
             jsonmenumovie(i);
             jsonmenutv(i);
         }
+        homeViewPage();
 
 
-        jsonmenumovie(2);
+        //    jsonmenumovie(2);
         //on tab change select data
 
 
-        tabIndicator.setupWithViewPager(bannerMoviesViewPager);
+        //   tabIndicator.setupWithViewPager(bannerMoviesViewPager);
 
-        Timer sliderTimer = new Timer();
+
         //  sliderTimer.scheduleAtFixedRate(view.AutoSlider(), 2000, 6000);
 
 
         ////////////////////////
 
-     //   handler = new Handler();
-//        Runnable runnable = new Runnable() {
-//            public void run() {
-//                if (bannerMoviesViewPager.getCurrentItem()<5) {
-//                    bannerMoviesViewPager.setCurrentItem(bannerMoviesViewPager.getCurrentItem() + 1);
-//                } else
-//                    bannerMoviesViewPager.setCurrentItem(0);
-//
-//            }
-//
-//
-//        };
-        tabIndicator.setupWithViewPager(bannerMoviesViewPager, true);
-        //     handler.postDelayed(runnable, 20);
+        handler = new Handler();
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int i = bannerMoviesViewPager.getCurrentItem();
+                        i++;
+                        if (i == 15) {
+                            i = 0;
+                        }
+                        bannerMoviesViewPager.setCurrentItem(i, true);
+
+
+                    }
+                });
+            }
+        }, 4000, 2500);
+
 
         return view;
     }
@@ -183,6 +200,39 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void homeViewPage() {
+
+        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+
+        allCategoryList = new ArrayList<>();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/tv/airing_today?api_key=9ed4a1f097a3e78ed51133843d2156ea&language=en-US&page=1",
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            List<CategoryItem> TVshowlList = new ArrayList<>();
+                            TVshowlList = json.JSONTvshowlist(response);
+                            setBannerMoviesPagerAdapter(TVshowlList);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(view.getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
+                Log.d("AAA", "Lỗi\n" + error.toString());
+            }
+        });
+        requestQueue.add(stringRequest);
+
+
+    }
+
     private void jsonmenumovie(int hk) {
         RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
         int a[] = {791373, 630004, 458576};
@@ -201,7 +251,7 @@ public class HomeFragment extends Fragment {
                                 setMovieListHorizontalRecyclerview1(movieDetailList);
                             } else {
                                 if (hk == 2) {
-                                    setBannerMoviesPagerAdapter(movieDetailList);
+                                    //   setBannerMoviesPagerAdapter(movieDetailList);
                                 } else setMovieListHorizontalRecyclerview2(movieDetailList);
 
                             }
@@ -222,6 +272,7 @@ public class HomeFragment extends Fragment {
 
 
     }
+
 
     private void jsonmenutv(int hk) {
         RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
@@ -261,8 +312,25 @@ public class HomeFragment extends Fragment {
     private void setBannerMoviesPagerAdapter(List<CategoryItem> bannerMoviesList) {
 
 
-        bannerMoviesPagerAdapter = new BannerMoviesPagerAdapter(view.getContext(), bannerMoviesList);
-        bannerMoviesViewPager.setAdapter(bannerMoviesPagerAdapter);
+        //  bannerMoviesPagerAdapter = new BannerMoviesPagerAdapter(view.getContext(), bannerMoviesList);
+        viewPage2Adapter = new ViewPage2Adapter(view.getContext(), bannerMoviesList);
+        bannerMoviesViewPager.setAdapter(viewPage2Adapter);
+        bannerMoviesViewPager.setClipToPadding(false);
+        bannerMoviesViewPager.setClipChildren(false);
+        bannerMoviesViewPager.setOffscreenPageLimit(3);
+
+
+        bannerMoviesViewPager.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+        compositePageTransformer.addTransformer(new MarginPageTransformer(30));
+        compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                float r = 1 - Math.abs(position);
+                page.setScaleY(0.85f + r * 1 / 2 * 0.15f);
+            }
+        });
+        bannerMoviesViewPager.setPageTransformer(compositePageTransformer);
 
     }
 
@@ -273,6 +341,7 @@ public class HomeFragment extends Fragment {
         horizontalRecyclerview1.setLayoutManager(layoutManager);
         movieListHorizontalAdapter1 = new MovieListHorizontalAdapter(view.getContext(), movieListHorizontal);
         horizontalRecyclerview1.setAdapter(movieListHorizontalAdapter1);
+        tv1.setText("Phim siêu anh hùng");
 
     }
 
@@ -282,15 +351,18 @@ public class HomeFragment extends Fragment {
         horizontalRecyclerview2.setLayoutManager(layoutManager);
         movieListHorizontalAdapter2 = new MovieListHorizontalAdapter(view.getContext(), movieListHorizontal);
         horizontalRecyclerview2.setAdapter(movieListHorizontalAdapter2);
+        tv2.setText("Phi vụ trộm thế kỷ");
 
     }
 
     private void setMovieListHorizontalRecyclerview3(List<CategoryItem> movieListHorizontal) {
+
         horizontalRecyclerview3 = view.findViewById(R.id.recyclerview3);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext(), RecyclerView.HORIZONTAL, false);
         horizontalRecyclerview3.setLayoutManager(layoutManager);
         movieListHorizontalAdapter3 = new MovieListHorizontalAdapter(view.getContext(), movieListHorizontal);
         horizontalRecyclerview3.setAdapter(movieListHorizontalAdapter3);
+        tv3.setText("Chương trình chuyền hình");
 
     }
 
@@ -300,6 +372,7 @@ public class HomeFragment extends Fragment {
         horizontalRecyclerview4.setLayoutManager(layoutManager);
         movieListHorizontalAdapter4 = new MovieListHorizontalAdapter(view.getContext(), movieListHorizontal);
         horizontalRecyclerview4.setAdapter(movieListHorizontalAdapter4);
+        tv4.setText("Phim dài tập");
 
     }
 
@@ -330,21 +403,4 @@ public class HomeFragment extends Fragment {
     }
 
 
-//    class AutoSlider extends TimerTask {
-//
-//        @Override
-//        public void run() {
-//            MainActivity.this.runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    if (bannerMoviesViewPager.getCurrentItem() < HomeList.size() - 1) {
-//                        bannerMoviesViewPager.setCurrentItem(bannerMoviesViewPager.getCurrentItem() + 1);
-//                    } else
-//                        bannerMoviesViewPager.setCurrentItem(0);
-//                }
-//
-//
-//            });
-//        }
-//    }
 }

@@ -2,6 +2,7 @@ package com.example.appvideo.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.example.appvideo.Activity.TvShowDetail;
 import com.example.appvideo.Json.Json;
 import com.example.appvideo.R;
 import com.example.appvideo.adapter.BannerMoviesPagerAdapter;
+import com.example.appvideo.adapter.BannerMoviesPagerAdapterPageHome;
 import com.example.appvideo.adapter.MainRecyclerAdapter;
 import com.example.appvideo.model.AllCategory;
 import com.example.appvideo.model.CategoryItem;
@@ -47,27 +49,30 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class TvShowFragment extends Fragment {
-    BannerMoviesPagerAdapter bannerMoviesPagerAdapter;
-    TabLayout tabIndicator, categoryTab;
-    ViewPager bannerMoviesViewPager;
+    private BannerMoviesPagerAdapterPageHome bannerMoviesPagerAdapter;
+    private TabLayout tabIndicator, categoryTab;
+    private ViewPager bannerMoviesViewPager;
 
-    RecyclerView mainRecyclerview;
-    MainRecyclerAdapter mainRecyclerAdapter;
-    List<AllCategory> allCategoryList;
-    NestedScrollView nestedScrollView;
-    AppBarLayout appBarLayout;
-    ImageView searchImage;
-    Button purcharBtn;
-    SwipeRefreshLayout swipeRefreshLayout;
-    Json json = new Json();
-    TextView textView;
-    String t;
-    View view;
+    private RecyclerView mainRecyclerview;
+    private MainRecyclerAdapter mainRecyclerAdapter;
+    private List<AllCategory> allCategoryList;
+    private NestedScrollView nestedScrollView;
+    private AppBarLayout appBarLayout;
+    private ImageView searchImage;
+    private Button purcharBtn;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private Json json = new Json();
+    private TextView textView;
+    private Handler handler;
+    private Timer timer;
+    private String t;
+    private View view;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_tvshow,container,false);
+        view = inflater.inflate(R.layout.fragment_tvshow, container, false);
 
         ////////////////////////////////////////////////
         this.testhhh();
@@ -81,7 +86,6 @@ public class TvShowFragment extends Fragment {
         searchImage = view.findViewById(R.id.search_image);
 
 
-
         //////
 
         this.ClickSearch();
@@ -91,14 +95,13 @@ public class TvShowFragment extends Fragment {
         this.jsonmenuHome();
 
 
-
         //on tab change select data
         categoryTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(tab.getPosition()==0){
-                   jsonmenuHome();
-                }else{
+                if (tab.getPosition() == 0) {
+                    jsonmenuHome();
+                } else {
                     jsonmenu(tab.getPosition());
                 }
 
@@ -117,9 +120,29 @@ public class TvShowFragment extends Fragment {
 
         tabIndicator.setupWithViewPager(bannerMoviesViewPager);
 
-        Timer sliderTimer = new Timer();
+
         //    sliderTimer.scheduleAtFixedRate(new getContext().AutoSlider(), 2000, 6000);
         tabIndicator.setupWithViewPager(bannerMoviesViewPager, true);
+
+
+        handler = new Handler();
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int i = bannerMoviesViewPager.getCurrentItem();
+                        i++;
+                        if (i == 15) {
+                            i = 0;
+                        }
+                        bannerMoviesViewPager.setCurrentItem(i, true);
+                    }
+                });
+            }
+        }, 4000, 2500);
 
         ////////////////////////
         return view;
@@ -140,27 +163,27 @@ public class TvShowFragment extends Fragment {
     private void testhhh() {
 
         RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
-        String [] nametitle={"Phát trong ngày","Tốp hàng đầu","Trở nên phổ biến","Trực tiếp tv"};
-        String [] nameapi={"airing_today","top_rated","popular","on_the_air"};
+        String[] nametitle = {"Phát trong ngày", "Tốp hàng đầu", "Trở nên phổ biến", "Trực tiếp tv"};
+        String[] nameapi = {"airing_today", "top_rated", "popular", "on_the_air"};
         allCategoryList = new ArrayList<>();
-        for(int i=0;i<4;i++) {
+        for (int i = 0; i < 4; i++) {
 
             int finalI = i;
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/tv/"+nameapi[finalI]+"?api_key=9ed4a1f097a3e78ed51133843d2156ea&language=vi-VN&page=1",
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/tv/" + nameapi[finalI] + "?api_key=9ed4a1f097a3e78ed51133843d2156ea&language=vi-VN&page=1",
                     new Response.Listener<String>() {
 
                         @Override
                         public void onResponse(String response) {
                             try {
-                                Toast.makeText(view.getContext(), allCategoryList.size()+"sdfjasfka", Toast.LENGTH_SHORT).show();
+
                                 List<CategoryItem> movieDetailList = new ArrayList<>();
                                 movieDetailList = json.JSONTvshowlist(response);
 
                                 allCategoryList.add(new AllCategory(nametitle[finalI], 1, movieDetailList));
-                                if(allCategoryList.size()==3){
+                                if (allCategoryList.size() == 3) {
                                     setBannerMoviesPagerAdapter(movieDetailList);
                                 }
-                                if(allCategoryList.size()==4){
+                                if (allCategoryList.size() == 4) {
                                     setMainRecyclerview(allCategoryList);
                                 }
 
@@ -179,73 +202,71 @@ public class TvShowFragment extends Fragment {
         }
 
 
-
     }
 
-    private void jsonmenu( int hk) {
+    private void jsonmenu(int hk) {
         RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
-         int a[]={95057,2224,456};
+        int a[] = {95057, 2224, 456};
 
 
-         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/tv/" +a[hk-1] +"/similar?api_key=9ed4a1f097a3e78ed51133843d2156ea&language=vi-VN&page=1",
-                 new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/tv/" + a[hk - 1] + "/similar?api_key=9ed4a1f097a3e78ed51133843d2156ea&language=vi-VN&page=1",
+                new Response.Listener<String>() {
 
-                     @Override
-                     public void onResponse(String response) {
-                         try {
-                             List<CategoryItem> movieDetailList = new ArrayList<>();
-                             movieDetailList = json.JSONTvshowlist(response);
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            List<CategoryItem> movieDetailList = new ArrayList<>();
+                            movieDetailList = json.JSONTvshowlist(response);
 
-                                     setScollDefaultState();
-                                     setBannerMoviesPagerAdapter(movieDetailList);
+                            setScollDefaultState();
+                            setBannerMoviesPagerAdapter(movieDetailList);
 
-                         } catch (JSONException e) {
-                             e.printStackTrace();
-                         }
-                     }
-                 }, new Response.ErrorListener() {
-             @Override
-             public void onErrorResponse(VolleyError error) {
-                 Toast.makeText(view.getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
-                 Log.d("AAA", "Lỗi\n" + error.toString());
-             }
-         });
-         requestQueue.add(stringRequest);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(view.getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
+                Log.d("AAA", "Lỗi\n" + error.toString());
+            }
+        });
+        requestQueue.add(stringRequest);
 
 
     }
+
     private void jsonmenuHome() {
 
         RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
         allCategoryList = new ArrayList<>();
 
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/tv/popular?api_key=9ed4a1f097a3e78ed51133843d2156ea&language=vi-VN&page=1",
-                    new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/tv/popular?api_key=9ed4a1f097a3e78ed51133843d2156ea&language=vi-VN&page=1",
+                new Response.Listener<String>() {
 
-                        @Override
-                        public void onResponse(String response) {
-                            try {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
 
-                                List<CategoryItem> movieHomelList = new ArrayList<>();
-                                movieHomelList = json.JSONTvshowlist(response);
+                            List<CategoryItem> movieHomelList = new ArrayList<>();
+                            movieHomelList = json.JSONTvshowlist(response);
 
-                                    setBannerMoviesPagerAdapter(movieHomelList);
+                            setBannerMoviesPagerAdapter(movieHomelList);
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(view.getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
-                    Log.d("AAA", "Lỗi\n" + error.toString());
-                }
-            });
-            requestQueue.add(stringRequest);
-
-
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(view.getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
+                Log.d("AAA", "Lỗi\n" + error.toString());
+            }
+        });
+        requestQueue.add(stringRequest);
 
 
     }
@@ -255,7 +276,7 @@ public class TvShowFragment extends Fragment {
 
 
         bannerMoviesViewPager = view.findViewById(R.id.banner_viewPager);
-        bannerMoviesPagerAdapter = new BannerMoviesPagerAdapter(view.getContext(), bannerMoviesList);
+        bannerMoviesPagerAdapter = new BannerMoviesPagerAdapterPageHome(view.getContext(), bannerMoviesList);
         bannerMoviesViewPager.setAdapter(bannerMoviesPagerAdapter);
 
     }
@@ -274,7 +295,8 @@ public class TvShowFragment extends Fragment {
         nestedScrollView.scrollTo(0, 0);
         appBarLayout.setExpanded(true);
     }
-    private  void setrefresh(){
+
+    private void setrefresh() {
         swipeRefreshLayout = view.findViewById(R.id.swipe_fefresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -284,24 +306,5 @@ public class TvShowFragment extends Fragment {
             }
         });
     }
-
-
-
-//    class AutoSlider extends TimerTask {
-//
-//        @Override
-//        public void run() {
-//            MainActivity.this.runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    if (bannerMoviesViewPager.getCurrentItem() < HomeList.size() - 1) {
-//                        bannerMoviesViewPager.setCurrentItem(bannerMoviesViewPager.getCurrentItem() + 1);
-//                    } else
-//                        bannerMoviesViewPager.setCurrentItem(0);
-//                }
-//
-//
-//            });
-//        }
-//    }
 }
+

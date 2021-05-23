@@ -1,11 +1,11 @@
 package com.example.appvideo.model;
 
 public class CategoryItem {
-    Integer id, tvshow;
-    String movieName;
-    String imageUrl;
-    String backdrop;
-    String time, yearOfRelease, summary, genres, title, movieKEY,vote;
+    private Integer id, tvshow;
+    private  String movieName;
+    private  String imageUrl;
+    private String backdrop;
+    private  String time, yearOfRelease, summary, genres, title, movieKEY,vote;
 
 
     public String getGenres() {
@@ -38,7 +38,8 @@ public class CategoryItem {
     }
 
     //// chi tiết movie///
-    public CategoryItem(String time, String yearOfRelease, String summary, String genres,String vote,String title) {
+    public CategoryItem(String imageUrl,String time, String yearOfRelease, String summary, String genres,String vote,String title) {
+       this.imageUrl=imageUrl;
         this.time = time;
         this.yearOfRelease = yearOfRelease;
         this.summary = summary;

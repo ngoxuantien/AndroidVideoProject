@@ -44,7 +44,7 @@ public class Json {
                 genres = genres + job.getString("name") + ",";
             }
         }
-        categoryItem = new CategoryItem(jsonObject.getString("episode_run_time"), jsonObject.getString("first_air_date"), jsonObject.getString("overview"), genres, vote, jsonObject.getString("name"));
+        categoryItem = new CategoryItem("https://image.tmdb.org/t/p/w500" +jsonObject.getString("poster_path"),jsonObject.getString("episode_run_time"), jsonObject.getString("first_air_date"), jsonObject.getString("overview"), genres, vote, jsonObject.getString("name"));
 
 
         return categoryItem;
@@ -77,7 +77,7 @@ public class Json {
                 genres = genres + job.getString("name") + ",";
             }
         }
-        categoryItem = new CategoryItem(jsonObject.getString("runtime"), jsonObject.getString("release_date"), jsonObject.getString("overview"), genres, vote, jsonObject.getString("original_title"));
+        categoryItem = new CategoryItem("https://image.tmdb.org/t/p/w500" +jsonObject.getString("poster_path"),jsonObject.getString("runtime"), jsonObject.getString("release_date"), jsonObject.getString("overview"), genres, vote, jsonObject.getString("original_title"));
 
 
         return categoryItem;

@@ -2,6 +2,7 @@ package com.example.appvideo.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.example.appvideo.Activity.SearchActivity;
 import com.example.appvideo.Json.Json;
 import com.example.appvideo.R;
 import com.example.appvideo.adapter.BannerMoviesPagerAdapter;
+import com.example.appvideo.adapter.BannerMoviesPagerAdapterPageHome;
 import com.example.appvideo.adapter.MainRecyclerAdapter;
 import com.example.appvideo.model.AllCategory;
 import com.example.appvideo.model.CategoryItem;
@@ -46,22 +48,24 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MovieFragment extends Fragment {
-    BannerMoviesPagerAdapter bannerMoviesPagerAdapter;
-    TabLayout tabIndicator, categoryTab;
-    ViewPager bannerMoviesViewPager;
+    private BannerMoviesPagerAdapterPageHome bannerMoviesPagerAdapter;
+    private TabLayout tabIndicator, categoryTab;
+    private ViewPager bannerMoviesViewPager;
 
-    RecyclerView mainRecyclerview;
-    MainRecyclerAdapter mainRecyclerAdapter;
-    List<AllCategory> allCategoryList;
-    NestedScrollView nestedScrollView;
-    AppBarLayout appBarLayout;
-    ImageView searchImage;
-    Button purcharBtn;
-    SwipeRefreshLayout swipeRefreshLayout;
-    Json json = new Json();
-    TextView textView;
-    String t;
-    View view;
+    private  RecyclerView mainRecyclerview;
+    private  MainRecyclerAdapter mainRecyclerAdapter;
+    private  List<AllCategory> allCategoryList;
+    private  NestedScrollView nestedScrollView;
+    private AppBarLayout appBarLayout;
+    private  ImageView searchImage;
+    private  Button purcharBtn;
+    private  SwipeRefreshLayout swipeRefreshLayout;
+    private  Json json = new Json();
+    private TextView textView;
+    private  String t;
+    private Handler handler;
+    private Timer timer;
+    private  View view;
 
     @Nullable
     @Override
@@ -116,9 +120,28 @@ public class MovieFragment extends Fragment {
 
         tabIndicator.setupWithViewPager(bannerMoviesViewPager);
 
-        Timer sliderTimer = new Timer();
+
         //    sliderTimer.scheduleAtFixedRate(new getContext().AutoSlider(), 2000, 6000);
         tabIndicator.setupWithViewPager(bannerMoviesViewPager, true);
+
+        handler = new Handler();
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int i = bannerMoviesViewPager.getCurrentItem();
+                        i++;
+                        if (i == 15) {
+                            i = 0;
+                        }
+                        bannerMoviesViewPager.setCurrentItem(i, true);
+                    }
+                });
+            }
+        }, 4000, 2500);
 
         ////////////////////////
         return view;
@@ -153,7 +176,7 @@ public class MovieFragment extends Fragment {
                             try {
 /// lỗi phần pupular////// xem lại để fixx
                                 List<CategoryItem> movieDetailList = new ArrayList<>();
-                                movieDetailList = json.JSONmovielist(response+"");
+                                movieDetailList = json.JSONmovielist(response + "");
 
                                 allCategoryList.add(new AllCategory(nametitle[finalI], 1, movieDetailList));
 
@@ -161,8 +184,8 @@ public class MovieFragment extends Fragment {
 //                                 setBannerMoviesPagerAdapter(movieDetailList);
 //                                }
 
-                                Toast.makeText(view.getContext(), "Lỗi ra là gì đó"+allCategoryList.size(), Toast.LENGTH_SHORT).show();
-                                if (allCategoryList.size() == 3) {
+
+                                if (allCategoryList.size() == 4) {
                                     setMainRecyclerview(allCategoryList);
                                 }
 
@@ -232,7 +255,7 @@ public class MovieFragment extends Fragment {
                             List<CategoryItem> movieHomelList = new ArrayList<>();
 
                             movieHomelList = json.JSONmovielist(response);
-                            Toast.makeText(view.getContext(), "Lỗisdsdfsdf"+movieHomelList.size(), Toast.LENGTH_SHORT).show();
+
                             setBannerMoviesPagerAdapter(movieHomelList);
 
                         } catch (JSONException e) {
@@ -255,7 +278,7 @@ public class MovieFragment extends Fragment {
 
 
         bannerMoviesViewPager = view.findViewById(R.id.banner_viewPager);
-        bannerMoviesPagerAdapter = new BannerMoviesPagerAdapter(view.getContext(), bannerMoviesList);
+        bannerMoviesPagerAdapter = new BannerMoviesPagerAdapterPageHome(view.getContext(), bannerMoviesList);
         bannerMoviesViewPager.setAdapter(bannerMoviesPagerAdapter);
 
     }

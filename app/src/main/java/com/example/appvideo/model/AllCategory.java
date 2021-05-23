@@ -3,9 +3,9 @@ package com.example.appvideo.model;
 import java.util.List;
 
 public class AllCategory {
-    String categoryTitle;
-    Integer categoryId;
-    List<CategoryItem> categoryItemList= null;
+    private String categoryTitle;
+    private Integer categoryId;
+    private List<CategoryItem> categoryItemList= null;
 
 
     public AllCategory(String categoryTitle, Integer categoryId, List<CategoryItem> categoryItemList) {

@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +14,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.appvideo.Database.DBManager;
+import com.example.appvideo.FirebaseConection.FirebaseUser;
 import com.example.appvideo.R;
+import com.example.appvideo.Session.Session;
 import com.example.appvideo.model.User;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -29,7 +30,6 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,8 +38,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.royrodriguez.transitionbutton.TransitionButton;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class LoginActivity extends Activity implements Serializable {
@@ -54,6 +52,10 @@ public class LoginActivity extends Activity implements Serializable {
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private User userlogin = new User();
     private boolean valueLogin = false;
+    private FirebaseUser firebase;
+    private Session session;
+
+
 
 
     @Override
@@ -61,6 +63,10 @@ public class LoginActivity extends Activity implements Serializable {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
+        session = new Session(this);
+        session.clearSession();
+      firebase= new FirebaseUser();
+
         forgotpasswordtv = findViewById(R.id.forgotpasswordtv);
         toSignUp = findViewById(R.id.toSignUp);
         usernametv = findViewById(R.id.usernamtv);
@@ -144,10 +150,12 @@ public class LoginActivity extends Activity implements Serializable {
 
     private void openProfile() {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("TrangthaiDN", 1);
+       session.setTypeUser(0);
         startActivity(intent);
         finish();
     }
+
+
 
     ////// chú ý phần code bên dưới ///// xem lại
     @Override
@@ -184,7 +192,7 @@ public class LoginActivity extends Activity implements Serializable {
                         if (valueLogin) {
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("TrangthaiDN", 2);
+                          session.setTypeUser(1);
                             intent.putExtra("UserObject", userlogin); /// khi muốn chuyển object qua Intent hoặc Bundel thì phải implemnet hết cả lớp class và lớp main cho chắc
                             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
@@ -211,7 +219,7 @@ public class LoginActivity extends Activity implements Serializable {
                 for (DataSnapshot userdataSnapshot : snapshot.getChildren()) {
                     User user = userdataSnapshot.getValue(User.class);
 
-                    if (usernametv.getText().toString().equals(user.getNameuser()) && passwordtv.getText().toString().equals(user.getPassword())) {
+                    if (usernametv.getText().toString().equals(user.getNameuser()) && passwordtv.getText().toString().equals(user.getPassword().toString())) {
 
                         valueLogin = true;
                         userlogin = user;

@@ -21,8 +21,8 @@ import java.util.List;
 
 public class MovieCastAdapter extends RecyclerView.Adapter<MovieCastAdapter.MainViewHolder> {
 
-    List<Cast> castList = new ArrayList<>();
-    Context context;
+    private List<Cast> castList = new ArrayList<>();
+    private Context context;
 
     public Context getContext() {
         return context;

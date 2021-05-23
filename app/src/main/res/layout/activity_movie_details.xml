@@ -21,10 +21,10 @@
         app:srcCompat="@drawable/ic_launcher_background" />
 
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,15 +99,15 @@
                     android:layout_height="match_parent"
                     android:text="120"
                     android:textColor="#ffff" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" Phút"
-                    android:textColor="#ffff"/>
+                    android:textColor="#ffff" />
 
 
             </LinearLayout>
-
 
 
             <LinearLayout
@@ -129,6 +129,7 @@
                     android:textColor="#ffff" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -202,15 +203,16 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/likemovie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/like" />
+                        android:src="@drawable/like1" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Theo dõi"
+                        android:text="Yêu thích"
                         android:textColor="#ffff" />
                 </LinearLayout>
 
@@ -221,15 +223,20 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:layout_gravity="center"
+                        android:id="@+id/ratingim"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/dollar" />
+
+                        android:src="@drawable/star" />
+
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mua Phim"
+                        android:layout_gravity="center_horizontal"
+
+                        android:text="Đánh giá"
                         android:textColor="#ffff" />
                 </LinearLayout>
 
@@ -262,16 +269,16 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/castrecyclerview"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="Tóm tắt"
                 android:textColor="#ffff" />
 
@@ -283,12 +290,13 @@
                 android:textColor="#ffff" />
 
             <TextView
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="15dp"
-                android:textColor="#ffff"
-                android:text="Phim liên quan"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp"
+                android:text="Phim liên quan"
+                android:textColor="#ffff" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/relatedlistmovie"
                 android:layout_width="match_parent"
@@ -299,11 +307,5 @@
 
     </ScrollView>
 
-
-
-
-
-    
-   
 
 </LinearLayout>

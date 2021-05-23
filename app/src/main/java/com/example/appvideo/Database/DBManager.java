@@ -58,7 +58,7 @@ public class DBManager extends SQLiteOpenHelper {
                 user.setDateofbirthuser(cursor.getString(4));
                 user.setPlaceuser(cursor.getString(5));
                 user.setGenderuser(cursor.getString(6));
-userList.add(user);
+                userList.add(user);
 
             } while (cursor.moveToNext());
         }

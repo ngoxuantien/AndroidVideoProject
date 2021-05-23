@@ -10,7 +10,7 @@ import android.widget.Button;
 import com.example.appvideo.R;
 
 public class SignInSignUpActivity extends Activity {
-Button signInBt,signUpBt;
+    private Button signInBt, signUpBt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +29,14 @@ Button signInBt,signUpBt;
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(SignInSignUpActivity.this,SignUpActivity.class);
+                Intent intent = new Intent(SignInSignUpActivity.this, SignUpActivity.class);
                 startActivity(intent);
 
             }
         });
     }
 
-    public void setOnClick(){
+    public void setOnClick() {
         signInBt = findViewById(R.id.signIn);
         signInBt.setOnClickListener(new View.OnClickListener() {
             @Override

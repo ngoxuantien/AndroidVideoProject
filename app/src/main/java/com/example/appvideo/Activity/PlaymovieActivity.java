@@ -12,21 +12,22 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 public class PlaymovieActivity extends Activity {
- YouTubePlayerView youTubePlayerView;
+    private YouTubePlayerView youTubePlayerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playmovie);
 
 
-this.setYouTubePlayerView();
+        this.setYouTubePlayerView();
 
     }
 
 
-    public  void setYouTubePlayerView(){
+    public void setYouTubePlayerView() {
         youTubePlayerView = findViewById(R.id.youtube_player_view);
-       // this.getLifecycle().addObserver(youTubePlayerView);
+        // this.getLifecycle().addObserver(youTubePlayerView);
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {

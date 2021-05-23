@@ -26,11 +26,12 @@
         android:background="@drawable/backgrow_button_login"/>
 
     <TextView
+        android:id="@+id/movieshearch"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Phim được tìm kiếm"
+
         android:textColor="#ffff"
         android:textSize="20dp"/>
     <androidx.recyclerview.widget.RecyclerView
@@ -38,10 +39,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/movieshearch2"
         android:layout_marginLeft="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chương trình được tìm thấy"
+
         android:textColor="#ffff"
         android:textSize="20dp"/>
     <androidx.recyclerview.widget.RecyclerView

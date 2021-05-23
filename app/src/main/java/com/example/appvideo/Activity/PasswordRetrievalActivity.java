@@ -42,9 +42,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class PasswordRetrievalActivity extends AppCompatActivity {
-    EditText etTo, nameUserForgot;
+    private EditText etTo, nameUserForgot;
     private TransitionButton btSend;
-    DBManager dbManager;
+    private DBManager dbManager;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private User userlogin = new User();
     private boolean valueLogin = false;

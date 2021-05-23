@@ -91,7 +91,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:text="MOVIE"
+            android:fontFamily="sans-serif-medium"
+            android:text="Phim Lẻ"
             android:textColor="#ffff"
             android:textSize="35dp" />
         <!--cách làm cho chữ trong tablayout thành chữ thường tabTextAppearance-->
@@ -112,10 +113,9 @@ app:tabTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.In
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
                 android:cropToPadding="false"
-                android:text="  Home  "
+                android:text="Trang Chủ"
              />
 
 
@@ -131,13 +131,13 @@ app:tabTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.In
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Anime "
+                android:text="Hoạt Hình"
                />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  Kids  "
+                android:text="Thiếu Nhi"
               />
         </com.google.android.material.tabs.TabLayout>
 

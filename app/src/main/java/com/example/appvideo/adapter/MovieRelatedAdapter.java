@@ -20,8 +20,8 @@ import com.example.appvideo.model.CategoryItem;
 import java.util.List;
 
 public class MovieRelatedAdapter extends RecyclerView.Adapter<MovieRelatedAdapter.MainViewHolder> {
-    Context context;
-    List<CategoryItem> categoryItemList;
+    private  Context context;
+    private List<CategoryItem> categoryItemList;
 
     public MovieRelatedAdapter(Context context, List<CategoryItem> categoryItemList) {
         this.context = context;

@@ -11,7 +11,7 @@ import android.view.Window;
 import com.example.appvideo.R;
 
 public class SplashScreenActivity extends Activity {
-Handler handler;
+    private Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -8,16 +8,16 @@
     <item
         android:id="@+id/moviepageitem"
         android:icon="@drawable/movieicon"
-        android:title="Movie" />
+        android:title="Phim lẻ" />
 
     <item
         android:id="@+id/tvshowitem"
         android:icon="@drawable/tvicon"
-        android:title="TvShow" />
+        android:title="Phim bộ" />
     <item
-        android:id="@+id/historyitem"
-        android:icon="@drawable/history"
-        android:title="Đã xem" />
+        android:id="@+id/yourmovie"
+        android:icon="@drawable/film"
+        android:title="Phim của bạn" />
     <item
         android:id="@+id/moreitem"
         android:icon="@drawable/more"

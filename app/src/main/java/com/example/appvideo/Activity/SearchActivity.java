@@ -6,11 +6,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -19,25 +22,30 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.appvideo.FirebaseConection.FirebaseHistorySearch;
 import com.example.appvideo.Json.Json;
 import com.example.appvideo.R;
 import com.example.appvideo.adapter.MovieListHorizontalAdapter;
 import com.example.appvideo.adapter.MovieRelatedAdapter;
 import com.example.appvideo.model.CategoryItem;
+import com.example.appvideo.model.HistorySearch;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SearchActivity extends Activity {
 
-    RecyclerView recyclerViewsearch1, recyclerViewsearch2;
-    MovieRelatedAdapter movieRelatedAdapter1, movieRelatedAdapter2;
-    Json json = new Json();
-    EditText editTextSearch;
-    Button button;
-
+    private RecyclerView recyclerViewsearch1, recyclerViewsearch2;
+    private MovieRelatedAdapter movieRelatedAdapter1, movieRelatedAdapter2;
+    private Json json = new Json();
+    private EditText editTextSearch;
+    private Button button;
+    private TextView textView1, textView2;
+    private FirebaseHistorySearch firebaseHistorySearch;
+private  Handler mainThreadHandler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,17 +55,39 @@ public class SearchActivity extends Activity {
 
         editTextSearch = findViewById(R.id.editextSearch);
         button = findViewById(R.id.btsearch);
+        textView1 = findViewById(R.id.movieshearch);
+        textView2 = findViewById(R.id.movieshearch2);
 
-        this.setOnClickbtSearch();
+       this.setOnClickbtSearch();
 
     }
-    private  void setOnClickbtSearch(){
+  
+    private void setOnClickbtSearch() {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String t = editTextSearch.getText().toString();
-               searchMovie(t);searchTvShow(t);
+                InputMethodManager imm = (InputMethodManager) SearchActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                //Find the currently focused view, so we can grab the correct window token from it.
+                View view = SearchActivity.this.getCurrentFocus();
+                //If no view currently has focus, create a new one, just so we can grab a window token from it
+                if (view == null) {
+                    view = new View(SearchActivity.this);
+                }
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
+                String t = editTextSearch.getText().toString();
+           //     postTaskInsideBackgroundTask();
+
+                searchTvShow(t);
+
+                searchMovie(t);
+
+
+                firebaseHistorySearch = new FirebaseHistorySearch();
+                firebaseHistorySearch.createUserObject();
+                Random random = new Random();
+                int d = random.nextInt(99999);
+                firebaseHistorySearch.addUserObject(new HistorySearch(d, t));
 
             }
         });
@@ -131,6 +161,8 @@ public class SearchActivity extends Activity {
         recyclerViewsearch1.setLayoutManager(layoutManager);
         movieRelatedAdapter1 = new MovieRelatedAdapter(SearchActivity.this, movieList);
         recyclerViewsearch1.setAdapter(movieRelatedAdapter1);
+        textView1.setText("Phim lẻ được tìm thấy");
+
 
     }
 
@@ -140,6 +172,7 @@ public class SearchActivity extends Activity {
         recyclerViewsearch2.setLayoutManager(layoutManager1);
         movieRelatedAdapter2 = new MovieRelatedAdapter(SearchActivity.this, TvShowList);
         recyclerViewsearch2.setAdapter(movieRelatedAdapter2);
+        textView2.setText("Phim bộ được tìm thấy");
 
     }
 

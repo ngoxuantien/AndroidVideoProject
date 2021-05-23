@@ -18,8 +18,8 @@ import java.util.List;
 
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.MainViewHolder> {
 
-    Context context;
-    List<AllCategory> allCategoryList;
+    private Context context;
+    private List<AllCategory> allCategoryList;
 
     public MainRecyclerAdapter(Context context, List<AllCategory> allCategoryList) {
         this.context = context;

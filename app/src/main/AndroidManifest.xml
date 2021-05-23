@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Appvideo">
-        <activity android:name=".Activity.PasswordRetrievalActivity"></activity>
+        <activity android:name=".Activity.HistorySearchActivity"></activity>
+        <activity android:name=".Activity.HistoryActivity" />
+        <activity android:name=".Activity.PasswordRetrievalActivity" />
         <activity android:name=".Activity.ProfileActivity" />
         <activity android:name=".Activity.UserActivity" />
         <activity android:name=".Activity.SignUpActivity" />

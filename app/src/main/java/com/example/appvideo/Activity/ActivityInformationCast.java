@@ -34,13 +34,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityInformationCast extends Activity {
-    ImageView searchImage;
-    MovieCastJoinAdapter movieCastJoinAdapter;
-    RecyclerView recyclerViewjoin;
-    List<CategoryItem> categoryItemListjoin;
-    List<Cast> castList;
-    TextView namecast, sexcast, strorycast, dateofbirthcast, placeCast;
-    ImageView nyminh;
+  private  ImageView searchImage;
+    private MovieCastJoinAdapter movieCastJoinAdapter;
+    private RecyclerView recyclerViewjoin;
+    private  List<CategoryItem> categoryItemListjoin;
+    private  List<Cast> castList;
+    private   TextView namecast, sexcast, strorycast, dateofbirthcast, placeCast;
+    private  ImageView nyminh;
 
 
     int ID;

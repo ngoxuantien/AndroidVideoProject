@@ -21,8 +21,8 @@ import java.util.List;
 
 public class BannerMoviesPagerAdapter extends PagerAdapter {
 
-    Context context;
-    List<CategoryItem> categoryItems;
+    private Context context;
+    private  List<CategoryItem> categoryItems;
 
     public BannerMoviesPagerAdapter(Context context, List<CategoryItem> categoryItems) {
         this.context = context;

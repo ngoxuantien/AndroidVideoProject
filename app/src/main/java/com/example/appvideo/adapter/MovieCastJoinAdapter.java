@@ -19,8 +19,8 @@ import com.example.appvideo.model.CategoryItem;
 import java.util.List;
 
 public class MovieCastJoinAdapter extends RecyclerView.Adapter<MovieCastJoinAdapter.MainViewHolder> {
-    Context context;
-    List<CategoryItem> categoryItemList;
+    private Context context;
+    private List<CategoryItem> categoryItemList;
 
     public MovieCastJoinAdapter(Context context, List<CategoryItem> categoryItemList) {
         this.context = context;

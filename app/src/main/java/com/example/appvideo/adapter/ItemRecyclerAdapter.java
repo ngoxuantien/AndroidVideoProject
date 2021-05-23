@@ -25,8 +25,8 @@ import java.util.List;
 public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapter.ItemViewHolder> {
 
 
-    Context context;
-    List<CategoryItem> categoryItems;
+    private  Context context;
+    private  List<CategoryItem> categoryItems;
 
     public Context getContext() {
         return context;

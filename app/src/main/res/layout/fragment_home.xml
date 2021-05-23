@@ -91,6 +91,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="sans-serif-medium"
             android:text="Trang Chủ"
             android:textColor="#ffff"
             android:textSize="35dp" />
@@ -116,6 +118,7 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#141516"
@@ -124,7 +127,7 @@
 
 
                 <RelativeLayout
-                    android:layout_marginTop="20dp"
+
                     android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
@@ -136,99 +139,94 @@
                     app:layout_constraintTop_toTopOf="parent">
 
 
-                    <androidx.viewpager.widget.ViewPager
+
+                    <androidx.viewpager2.widget.ViewPager2
+                      android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
                         android:id="@+id/banner_viewPager"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-
                         android:background="#141516" />
-<!--<TextView-->
-<!--    android:layout_width="wrap_content"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:text="Phim hay"-->
-<!--    android:textColor="#ffff"/>-->
 
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tab_indicator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerInParent="true"
-                        android:background="#00FFFFFF"
-                        app:tabBackground="@drawable/indicator_selector"
-                        app:tabIndicatorHeight="0dp" />
 
 
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/tv1"
+                   android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Phim siêu anh hùng"
+
+                    android:fontFamily="@font/montserrat"
+                    android:textSize="20dp"
                     android:textColor="#ffff"
-                    android:textSize="20dp" />
+                   />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="#141516" />
 
                 <TextView
+                    android:id="@+id/tv2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Phi vụ trộm thế kỉ"
+
                     android:textColor="#ffff"
+                    android:fontFamily="@font/montserrat"
                     android:textSize="20dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="#141516" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/main_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="#141516" />
 
                 <TextView
+                    android:id="@+id/tv3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Chương trình chuyền hình"
+
+
                     android:textColor="#ffff"
+                    android:fontFamily="@font/montserrat"
                     android:textSize="20dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview3"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="#141516" />
 
                 <TextView
+                    android:id="@+id/tv4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Phim dài tập"
+
                     android:textColor="#ffff"
+                    android:fontFamily="@font/montserrat"
                     android:textSize="20dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview4"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:background="#141516" />
 
