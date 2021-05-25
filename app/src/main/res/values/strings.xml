@@ -11,7 +11,8 @@
         <item>Korea</item>
         <item>Lao</item>
     </string-array>
-    <string name="facebook_app_id">190632335914834</string>
-    <string name="fb_login_protocol_scheme">fb190632335914834</string>
+    <string name="facebook_app_id">495281881892446</string>
+    <string name="fb_login_protocol_scheme">fb495281881892446</string>
+
 
 </resources>

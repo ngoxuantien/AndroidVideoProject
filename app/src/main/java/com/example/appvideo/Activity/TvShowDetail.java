@@ -282,7 +282,7 @@ setClickliketvshow();
 
 
         keymovie = "rong";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/tv/" + kh + "/videos?api_key=9ed4a1f097a3e78ed51133843d2156ea&language=vi-Vi",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/tv/" + kh + "/videos?api_key=9ed4a1f097a3e78ed51133843d2156ea&language=en-US",
                 new Response.Listener<String>() {
 
                     @Override

@@ -1,5 +1,6 @@
 package com.example.appvideo.Activity;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -8,6 +9,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.VoiceInteractor;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -36,10 +41,17 @@ import com.example.appvideo.adapter.MovieRelatedAdapter;
 import com.example.appvideo.model.Cast;
 import com.example.appvideo.model.CategoryItem;
 import com.example.appvideo.model.HistoryMovieWatched;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.ShareHashtag;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +62,7 @@ import static android.content.ContentValues.TAG;
 public class MovieDetails extends Activity {
 
     private TextView moviename;
-    private ImageView movieImage, likemovie;
+    private ImageView movieImage, likemovie,share;
     private String keymovie;
     private Button playButton;
     private RecyclerView mainRecyclerview;
@@ -70,12 +82,18 @@ public class MovieDetails extends Activity {
     private int anhlike = 1;
     private ImageView ratingim;
 
+//lieen quan den share
+    private CallbackManager callbackManager;
+    private  ShareDialog shareDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_movie_details);
+        share = findViewById(R.id.share);
 
         moviename = findViewById(R.id.movie_name);
         movieImage = findViewById(R.id.movie_image_detail);
@@ -108,6 +126,13 @@ public class MovieDetails extends Activity {
         moviename.setText(mname);
 
 
+
+        ///////////////////////////////////////////
+        callbackManager= CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
+        printKeyHash();
+
+
         this.jsonmovieDetail();
         this.testhhh();
         this.jsonRelated();
@@ -116,6 +141,38 @@ public class MovieDetails extends Activity {
 
         this.setPlayButton();
         setClickRatingitem();
+setclickSharelink();
+    }
+
+    private void setclickSharelink() {
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(shareDialog.canShow(ShareLinkContent.class)){
+                    ShareLinkContent shareLinkContent= new ShareLinkContent.Builder().setContentUrl(Uri.parse("https://www.themoviedb.org/movie/"+mID+"")).setShareHashtag(new ShareHashtag.Builder().setHashtag("#WittCode").build())
+                            .build();
+                    shareDialog.show(shareLinkContent);
+                    //  btlink.setShareContent(shareLinkContent);
+                }
+            }
+        });
+
+    }
+    private void printKeyHash(){
+        try {
+            PackageInfo info =getPackageManager().getPackageInfo("com.example.appvideo", PackageManager.GET_SIGNATURES);
+            for(Signature signature:info.signatures){
+                MessageDigest md =MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+            }
+        } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode,resultCode,data);
 
     }
 
@@ -284,7 +341,7 @@ public class MovieDetails extends Activity {
         }
 
         keymovie = "rong";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/" + catagory + "/" + kh + "/videos?api_key=9ed4a1f097a3e78ed51133843d2156ea&language=vi-VN",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://api.themoviedb.org/3/" + catagory + "/" + kh + "/videos?api_key=9ed4a1f097a3e78ed51133843d2156ea&language=en-US",
                 new Response.Listener<String>() {
 
                     @Override

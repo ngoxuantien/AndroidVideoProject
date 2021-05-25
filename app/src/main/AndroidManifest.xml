@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Appvideo">
-        <activity android:name=".Activity.HistorySearchActivity"></activity>
+        <activity android:name=".Activity.testshare"></activity>
+        <activity android:name=".Activity.HistorySearchActivity" />
         <activity android:name=".Activity.HistoryActivity" />
         <activity android:name=".Activity.PasswordRetrievalActivity" />
         <activity android:name=".Activity.ProfileActivity" />
@@ -47,6 +48,10 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
+        <provider android:authorities="com.facebook.app.FacebookContentProvider495281881892446"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">

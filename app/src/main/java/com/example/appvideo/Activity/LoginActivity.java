@@ -39,6 +39,8 @@ import com.royrodriguez.transitionbutton.TransitionButton;
 
 import java.io.Serializable;
 
+import javax.net.ssl.ManagerFactoryParameters;
+
 
 public class LoginActivity extends Activity implements Serializable {
     private TransitionButton loginBt;
@@ -149,7 +151,7 @@ public class LoginActivity extends Activity implements Serializable {
     }
 
     private void openProfile() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this,MainActivity.class);
        session.setTypeUser(0);
         startActivity(intent);
         finish();
